@@ -1,0 +1,35 @@
+epochs: 150
+batch_size: 64
+learning_rate: 0.001
+alpha: 0.25
+gamma: 1.9
+clipnorm: 1.0 # gradient clipping - stabilizes the loss spikes seen around epoch 68
+
+# PCA: set pca_variance_threshold (matches paper's 93.2% retained variance)
+# to auto-pick the component count. Set it to null and use pca_components
+# instead for a fixed count like the paper's default of 23.
+# IMPORTANT: make sure you're on the version of pca_extraction.py that
+# actually uses this threshold - an older run of this repo ignored it and
+# fell back to a fixed 23 components, retaining only ~88.5% variance
+# instead of the paper's 93.2%. Check the "Selected N components, retained
+# variance: X" print line after running - X should be >= 0.93.
+pca_components: 30
+pca_variance_threshold: null
+
+# Classifier
+use_class_weight: true
+
+# Phase 2 classifier head training controls
+use_class_weight: true # extra correction for injection/mitm/password on top of focal loss
+early_stopping_patience: 15 # stop once val_accuracy stalls; restores best-epoch weights
+reduce_lr_patience: 8
+reduce_lr_factor: 0.5
+min_lr: 0.00001
+head_dense_units: 64 # extra Dense+BN+Dropout layer between encoder and softmax
+head_dropout: 0.3
+
+# Few-shot parameters
+n_way: 5 # was 4 - now covers all 5 minority classes every episode
+k_shot: 5
+q_query: 10
+episodes: 3000

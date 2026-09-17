@@ -1,0 +1,19 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Dataset (too large / not yours to publish — keep data/README.md only)
+data/*.csv
+data/*.parquet
+
+# Generated outputs
+results_multiclass.csv
+shap_summary.png
+*.h5
+*.keras
+
+# OS/editor cruft
+.DS_Store
+.idea/
+.vscode/
